@@ -4,12 +4,22 @@
 \description{
  plots Pen's Parade of a vector \code{x}}
 \usage{
-Pen(x, main="Pen's Parade", ylab=expression(x[(i)]/bar(x)),
-    xlab=expression(i/n), col=4, lwd=2, las=1, ...)
+Pen(x, n = rep(1, length(x)),
+  scaled = TRUE, abline = TRUE, segments = FALSE,  
+  main = "Pen's Parade", ylab = NULL, xlab = NULL, 
+  col = 4, lwd = 2, las = 1, fill = NULL, \dots
+  
 }
 \arguments{
-\item{x}{a vector containing non-negative elements.}
- \item{main, ylab, xlab, col, lwd, las, ...}{high-level \code{\link{plot}} function parameters.}
+ \item{x}{a vector containing non-negative elements.}
+ \item{n}{a vector of frequencies or weights, must be same length as \code{x}.}
+ \item{scaled}{logical. Should Pen's parade be divided by \code{mean(x)}?}
+ \item{abline}{logical. Should a horizontal line for the mean be drawn?}
+ \item{segments}{logical. Should histogram-like segments be drawn?}
+ \item{fill}{a color for filling the area under the curve.}
+ \item{xlab,ylab}{axis labels. Suitable defaults depending on
+   \code{scaled} and \code{n} are chosen.}
+ \item{main, col, lwd, las, \dots}{further high-level \code{\link{plot}} parameters.}
 }
 \details{
 Pen's Parade is basically the inverse distribution function (standardized by

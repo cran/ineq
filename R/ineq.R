@@ -233,16 +233,46 @@ major <- function(x,y)
         stop("incomparable arguments")
 }
 
-Pen <- function(x, main="Pen's Parade", ylab=expression(x[(i)]/bar(x)),
-  xlab=expression(i/n), col=4, lwd=2, las=1, ...)
+Pen <- function(x, n = rep(1, length(x)),
+  scaled = TRUE, abline = TRUE, segments = FALSE,  
+  main = "Pen's Parade", ylab = NULL, xlab = NULL, 
+  col = 4, lwd = 2, las = 1, fill = NULL, ...) 
 {
-  n <- length(x)
-  a <- (0:n)/n
-  b <- sort(c(0,x))/mean(x)
-  plot(a, b, type="S", main=main, ylab=ylab,xlab=xlab, xaxs="i", yaxs="i",
-    col=col, lwd=lwd, las=las, ...)
-  abline(1,0, lty=3)
+  o <- order(x)
+  x <- x[o]
+  n <- n[o]
+    
+  if(scaled) x <- x/mean(x)
+
+  if(is.null(ylab)) {
+    if(scaled) ylab <- expression(x[(i)]/bar(x))
+      else ylab <- expression(x[(i)])
+  }
+
+  if(is.null(xlab)) {
+    if(identical(all.equal(n, rep(1, length(x))), TRUE)) xlab <- expression(i/n)
+      else xlab <- expression(Sigma[i](n[(i)]/n))
+  }
+  
+  n <- cumsum(c(0, n))/sum(n)   
+
+  plot(c(0, 1), c(0, max(x)), type = "n", main = main, ylab = ylab, xlab = xlab, 
+      xaxs = "i", yaxs = "i", col = col, lwd = lwd, las = las,
+      ...)
+
+  ln <- length(n)
+  n2 <- c(rep(n[-ln], rep(2, ln-1)), n[ln])
+  x2 <- c(0, rep(x, rep(2, ln-1)))
+      
+  lines(n2, x2, col = col, lwd = lwd)
+  
+  if(!is.null(fill)) polygon(c(n2, 1, 0), c(x2, 0, 0), col = fill, border = col)
+
+  if(abline) abline(h = mean(x), lty = 3)
+  if (segments) segments(n, 0, n, x, col = col, lwd = lwd)
+  box()
 }
+
 
 Gini <- function(x)
 {
