@@ -241,14 +241,8 @@ RS <- function(x)
 
 Atkinson <- function(x, parameter=0.5)
 {
-    geom.mean <- function(x) 
-    { 
-        n <- length(x) 
-        gm <- prod(x)^(1/n) 
-        gm 
-    } 
     if(parameter==1)
-        A <- 1 - (geom.mean(x)/mean(x))
+        A <- 1 - ((prod(x)^(1/length(x)))/mean(x))
     else
         {
             x <- (x/mean(x))^(1-parameter)
@@ -276,7 +270,7 @@ Theil <- function(x, parameter=0)
   }
   else
   {
-    Th <- geom.mean(x)/mean(x)
+    Th <- (prod(x)^(1/length(x)))/mean(x)
     Th <- -log(Th)
   }
   Th
