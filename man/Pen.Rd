@@ -7,13 +7,12 @@
 Pen(x, n = rep(1, length(x)), group = NULL,
   scaled = TRUE, abline = TRUE, segments = NULL,  
   main = "Pen's Parade", ylab = NULL, xlab = NULL, 
-  col = NULL, lwd = NULL, las = 1, fill = NULL, \dots
-  
+  col = NULL, lwd = NULL, las = 1, fill = NULL, \dots)  
 }
 \arguments{
  \item{x}{a vector containing non-negative elements.}
  \item{n}{a vector of frequencies or weights, must be same length as \code{x}.}
- \item{n}{a factor coding different groups, must be same length as \code{x}. See also details.}
+ \item{group}{a factor coding different groups, must be same length as \code{x}. See also details.}
  \item{scaled}{logical. Should Pen's parade be divided by \code{mean(x)}?}
  \item{abline}{logical. Should a horizontal line for the mean be drawn?}
  \item{segments}{logical. Should histogram-like segments be drawn?}
