@@ -25,7 +25,8 @@ entropy(x, parameter = 0.5)
 }
 \arguments{
  \item{x}{a vector containing at least non-negative elements}
-\item{parameter}{parameter of the inequality measure}
+\item{parameter}{parameter of the inequality measure (if set to \code{NULL}
+  the default parameter of the respective measure is used)}
 \item{type}{character string giving the measure used to compute inequality.
   must be one of the strings in the default argument (the first character
   is sufficient). defaults to "Gini".}

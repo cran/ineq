@@ -7,14 +7,15 @@
  computes the concentration within a vector according to the
 specified concentration measure }
 \usage{
-conc(x, parameter=1, type=c("Herfindahl", "Rosenbluth")) 
+conc(x, parameter = NULL, type = c("Herfindahl", "Rosenbluth"))
 
-Herfindahl(x, parameter=1)
+Herfindahl(x, parameter = 1)
 Rosenbluth(x)
 }
 \arguments{
  \item{x}{a vector containing non-negative elements}
-\item{parameter}{parameter of the concentration measure}
+\item{parameter}{parameter of the concentration measure (if set to \code{NULL}
+  the default parameter of the respective measure is used)}
 \item{type}{character string giving the measure used to compute concentration.
   must be one of the strings in the default argument (the first character
   is sufficient). defaults to "Herfindahl".} }

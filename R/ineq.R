@@ -233,7 +233,7 @@ major <- function(x,y)
         stop("incomparable arguments")
 }
 
-Pen <- function(x, main="Pen Parade", ylab=expression(x[(i)]/bar(x)),
+Pen <- function(x, main="Pen's Parade", ylab=expression(x[(i)]/bar(x)),
   xlab=expression(i/n), col=4, lwd=2, las=1, ...)
 {
   n <- length(x)

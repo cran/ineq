@@ -1,6 +1,6 @@
 Package: ineq
-Version: 0.2-1
-Date: 2001-11-29
+Version: 0.2-2
+Date: 2003-11-04
 Title: Measuring inequality, concentration and poverty
 Author: Achim Zeileis <zeileis@ci.tuwien.ac.at>
 Maintainer: Achim Zeileis <zeileis@ci.tuwien.ac.at>

@@ -8,7 +8,7 @@
  computes the poverty of an (income) vector according to the
 specified poverty measure }
 \usage{
-pov(x,k,parameter=1,type=c("Watts", "Sen", "Foster"))
+pov(x, k, parameter = NULL,type = c("Watts", "Sen", "Foster"))
 
 Watts(x,k)
 Sen(x,k)
@@ -17,7 +17,8 @@ Foster(x,k,parameter=1)
 \arguments{
  \item{x}{a vector containing at least non-negative elements}
  \item{k}{a constant giving the absolute poverty boundary}
- \item{parameter}{parameter of the poverty measure}
+ \item{parameter}{parameter of the poverty measure (if set to \code{NULL}
+  the default parameter of the respective measure is used)}
  \item{type}{character string giving the measure used to compute poverty
     coefficient must be one of the strings in the default argument (the first
     character is sufficient). defaults to "Watts".}
