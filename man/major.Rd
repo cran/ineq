@@ -7,7 +7,7 @@
 major(x,y)
 }
 \arguments{
-\item{x}{a vector containing non-negative elements}
+\item{x,y}{vectors containing non-negative elements (with same length and same mean)}
 }
 \value{
   logical. TRUE if x majorizes y (x >=(M) y), FALSE if not.
@@ -16,7 +16,7 @@ major(x,y)
 and same mean) it is possible that neither x majorizes y nor y majorizes x.}
 \references{Marshall / Olkin: Inequalities: Theory of Majorization and Its
 Applications, New York 1979 (Academic Press)}
-\author{Achim Zeileis \email{zeileis@statistik.uni-dortmund.de}}
+\author{Achim Zeileis \email{zeileis@ci.tuwien.ac.at}}
 
 \seealso{\code{\link{Lc}}}
 

@@ -30,7 +30,7 @@ Rosenbluth(x)
 F A Cowell: Measuring Inequality, 1995 Prentice Hall/Harvester Wheatshef,
 
 M Hall / N Tidemann: Measures of Concentration, 1967, JASA 62, 162-168.}
-\author{Achim Zeileis \email{zeileis@statistik.uni-dortmund.de}}
+\author{Achim Zeileis \email{zeileis@ci.tuwien.ac.at}}
 
 \seealso{\code{\link{ineq}}, \code{\link{pov}}}
 

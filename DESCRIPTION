@@ -1,8 +1,8 @@
 Package: ineq
-Version: 0.1-1
-Date: 2000/01/05
+Version: 0.1-2
+Date: 2000/21/11
 Title: Measuring inequality, concentration and poverty
-Author: Achim Zeileis <zeileis@statistik.uni-dortmund.de>
+Author: Achim Zeileis <zeileis@ci.tuwien.ac.at>
 Description: Inequality, concentration and poverty measures
              Lorenz curves (empiric and theoretic)
 License: GPL

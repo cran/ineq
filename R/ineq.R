@@ -18,12 +18,12 @@ conc <- function(x, parameter=1, type=c("Herfindahl", "Rosenbluth"))
   Rosenbluth = Rosenbluth(x))
 }
 
-pov <- function(x,c,parameter=1,type=c("Watts", "Sen", "Foster"))
+pov <- function(x,k,parameter=1,type=c("Watts", "Sen", "Foster"))
 {
   switch(match.arg(type),
-  Watts = Watts(x,c),
-  Sen = Sen(x,c),
-  Foster = Foster(x,c,parameter=parameter))
+  Watts = Watts(x,k),
+  Sen = Sen(x,k),
+  Foster = Foster(x,k,parameter=parameter))
 }
 
 Lc <- function(x, n=rep(1,length(x)), plot=F)
@@ -67,7 +67,8 @@ theor.Lc.plot<-function(type=c("Singh-Maddala","Dagum","lognorm","Pareto","expon
   switch(match.arg(type),
   "Singh-Maddala"=lines(dummy,Lc.singh(dummy,parameter=parameter),col=col,type="l",lty=lty),
   Dagum=lines(dummy,Lc.dagum(dummy,parameter=parameter),col=col,type="l",lty=lty),
-  lognorm=lines(dummy,Lc.lognorm(dummy,parameter=parameter),col=col,type="l",lty=lty),   Pareto =lines(dummy,Lc.pareto(dummy,parameter), col=col,type="l",lty=lty),  
+  lognorm=lines(dummy,Lc.lognorm(dummy,parameter=parameter),col=col,type="l",lty=lty),
+  Pareto =lines(dummy,Lc.pareto(dummy,parameter), col=col,type="l",lty=lty),  
   exponential = lines(dummy, Lc.exp(dummy), col=col, type="l", lty=lty))
 }
 
@@ -98,8 +99,8 @@ Lc.lognorm <- function(p, parameter=1)
     cat("inadmissible parameter. default parameter=1 is used. \n")
     sigma <- 1
   }
-  loglc <- qnorm(p) - sigma
-  loglc <- pnorm(loglc)
+  loglc <- p
+  loglc[!loglc==0 & !loglc==1] <- pnorm(qnorm(loglc[!loglc==0 & !loglc==1]) - sigma)
   loglc
 }
 
@@ -324,35 +325,35 @@ entropy <- function(x, parameter=0.5)
   e
 }
 
-Sen <- function(x,c)
+Sen <- function(x,k)
 {
-  x2 <- x[x<c]
+  x2 <- x[x<k]
   if(length(x2)<1)
     0
   else
   {
-    H <- sum(x<c)/length(x)
-    I <- sum((c-x2)/c)/length(x2)
+    H <- sum(x<k)/length(x)
+    I <- sum((k-x2)/k)/length(x2)
     G <- Gini(x2)
     H*(I+(1-I)*G)
   }
 }
 
-Watts <- function(x,c)
+Watts <- function(x,k)
 {
-  x2 <- x[x<c]
+  x2 <- x[x<k]
   if(length(x2)<1)
     0
   else
-    sum(log(c/x2))/length(x)
+    sum(log(k/x2))/length(x)
 }
 
-Foster <- function(x,c,parameter=1)
+Foster <- function(x,k,parameter=1)
 {
-  x2 <- x[x<c]
+  x2 <- x[x<k]
   if(length(x2)<1)
     0
   else
-    sum(((c-x2)/c)^(parameter-1))/length(x)
+    sum(((k-x2)/k)^(parameter-1))/length(x)
 }
 

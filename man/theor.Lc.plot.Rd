@@ -15,7 +15,7 @@ theor.Lc.plot(type=c("Singh-Maddala","Dagum","lognorm","Pareto","exponential"),p
 \references{C Dagum: Income Distribution Models, 1983, in: Johnson / Kotz (Eds): Encyclopedia of Statistical Sciences Vol.4, 27-34.
 
 J B McDonald: Some generalized functions for the size distribution of income, 1984, Econometrica 52, 647-664.}
-\author{Achim Zeileis \email{zeileis@statistik.uni-dortmund.de}}
+\author{Achim Zeileis \email{zeileis@ci.tuwien.ac.at}}
 
 \seealso{\code{\link{Lc}}, \code{\link{Lc.plot}}}
 

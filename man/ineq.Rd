@@ -58,7 +58,7 @@ F A Cowell: Measuring Inequality, 1995 Prentice Hall/Harvester Wheatshef,
 
 Marshall / Olkin: Inequalities: Theory of Majorization and Its
 Applications, New York 1979 (Academic Press).}
-\author{Achim Zeileis \email{zeileis@statistik.uni-dortmund.de}}
+\author{Achim Zeileis \email{zeileis@ci.tuwien.ac.at}}
 
 \seealso{\code{\link{conc}}, \code{\link{pov}}}
 

@@ -18,7 +18,7 @@ Pen's Parade is basically the inverse distribution function (standardized by
 F A Cowell: Measuring Inequality, 1995 Prentice Hall/Harvester Wheatshef,
 
 J Pen: Income Distribution, 1971, Harmondsworth: Allen Lane.}
-\author{Achim Zeileis \email{zeileis@statistik.uni-dortmund.de}}
+\author{Achim Zeileis \email{zeileis@ci.tuwien.ac.at}}
 
 \seealso{\code{\link{Lc}}, \code{\link{Lc.plot}}}
 

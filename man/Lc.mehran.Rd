@@ -13,7 +13,7 @@ Lc.mehran(x,n)
 \value{a list like computed by \code{Lc}, but containing only
   \code{p} and \code{L}.}
 \references{F Mehran: Bounds on the Gini Index Based on Observed Points of the Lorenz Curve, 1975, JASA 70, 64-66. }
-\author{Achim Zeileis \email{zeileis@statistik.uni-dortmund.de}}
+\author{Achim Zeileis \email{zeileis@ci.tuwien.ac.at}}
 
 \seealso{\code{\link{Lc}}, \code{\link{Lc.plot}}, \code{\link{theor.Lc.plot}}}
 
