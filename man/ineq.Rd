@@ -12,25 +12,29 @@
  computes the inequality within a vector according to the
 specified inequality measure }
 \usage{
-ineq(x,parameter=1,type=c("Gini","RS","Atkinson","Theil","Kolm","var","square.var","entropy"))
+ineq(x, parameter = NULL, type = c("Gini", "RS", "Atkinson", "Theil", "Kolm", "var",
+     "square.var", "entropy"))
 
 Gini(x)
 RS(x)
-Atkinson(x, parameter=0.5) 
-Theil(x, parameter=0)
-Kolm(x, parameter=1)
-var.coeff(x, square=F)
-entropy(x, parameter=0.5)
+Atkinson(x, parameter = 0.5)
+Theil(x, parameter = 0)
+Kolm(x, parameter = 1)
+var.coeff(x, square = FALSE)
+entropy(x, parameter = 0.5)
 }
 \arguments{
  \item{x}{a vector containing at least non-negative elements}
 \item{parameter}{parameter of the inequality measure}
 \item{type}{character string giving the measure used to compute inequality.
   must be one of the strings in the default argument (the first character
-  is sufficient). defaults to "Gini".} }
+  is sufficient). defaults to "Gini".}
+\item{square}{logical. Argument of the function \code{var.coeff}, for details
+  see below.}}
 \details{\code{ineq} is just a wrapper for the inequality measures \code{Gini},
          \code{RS}, \code{Atkinson}, \code{Theil}, \code{Kolm},\code{var.coeff},
-         \code{entropy}.
+         \code{entropy}. If parameter is set to \code{NULL} the default from
+         the respective function is used.
 
          \code{Gini} is the Gini coefficient, \code{RS} is the the Ricci-Schutz
          coefficient (also called Pietra´s measure), \code{Atkinson} gives
@@ -42,7 +46,7 @@ entropy(x, parameter=0.5)
 
          \code{ineq(x, type="var")} and \code{var.coeff(x)} respectively
          compute the coefficient of variation, while
-         \code{ineq(x,type="square.var")} and \code{var.coeff(x, square=T)}
+         \code{ineq(x,type="square.var")} and \code{var.coeff(x, square=TRUE)}
          compute the squared coefficient of variation.
 
          \code{entropy} computes the generalized entropy, which is for
@@ -70,5 +74,5 @@ ineq(x)
 # compute Atkinson coefficient with parameter=0.5
 ineq(x, parameter=0.5, type="Atkinson")
 }
-\keyword{}
+\keyword{univar}
 

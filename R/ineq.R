@@ -1,4 +1,5 @@
-ineq <-function(x,parameter=1,type=c("Gini","RS","Atkinson","Theil","Kolm","var","square.var","entropy"))
+ineq <- function(x, parameter=NULL, type=c("Gini", "RS", "Atkinson", "Theil",
+    "Kolm", "var", "square.var", "entropy"))
 {
   switch(match.arg(type),
   Gini = Gini(x),
@@ -7,18 +8,18 @@ ineq <-function(x,parameter=1,type=c("Gini","RS","Atkinson","Theil","Kolm","var"
   Theil = Theil(x, parameter=parameter),
   Kolm = Kolm(x, parameter=parameter),
   var = var.coeff(x),
-  square.var = var.coeff(x, square=T),
+  square.var = var.coeff(x, square=TRUE),
   entropy = entropy(x, parameter=parameter))
 }
 
-conc <- function(x, parameter=1, type=c("Herfindahl", "Rosenbluth"))
+conc <- function(x, parameter=NULL, type=c("Herfindahl", "Rosenbluth"))
 {
   switch(match.arg(type),
   Herfindahl = Herfindahl(x, parameter=parameter),
   Rosenbluth = Rosenbluth(x))
 }
 
-pov <- function(x,k,parameter=1,type=c("Watts", "Sen", "Foster"))
+pov <- function(x, k, parameter=NULL, type=c("Watts", "Sen", "Foster"))
 {
   switch(match.arg(type),
   Watts = Watts(x,k),
@@ -26,7 +27,7 @@ pov <- function(x,k,parameter=1,type=c("Watts", "Sen", "Foster"))
   Foster = Foster(x,k,parameter=parameter))
 }
 
-Lc <- function(x, n=rep(1,length(x)), plot=F)
+Lc <- function(x, n=rep(1,length(x)), plot=FALSE)
 {
     k <- length(x)
     o <- order(x)
@@ -40,46 +41,65 @@ Lc <- function(x, n=rep(1,length(x)), plot=F)
     L2 <- L * mean(x)
     Lc <- list(p,L,L2)
     names(Lc) <- c("p", "L", "L.general")
-    if(plot==T)
-        Lc.plot(Lc)
+    class(Lc) <- "Lc"
+    if(plot)
+        plot(Lc)
     Lc
 }
 
-Lc.plot <- function(Lc, general=F, lwd=2,xlab="p",ylab="L(p)",main="Lorenz curve", new=F, col=1, lty=1)
+plot.Lc <- function(x, general=FALSE, lwd=2,xlab="p",ylab="L(p)",
+  main="Lorenz curve", las=1, ...)
 {
-    p <- Lc$p
-    if(general==F)
-      L <- Lc$L
+    if(!general)
+      L <- x$L
     else
-      L <- Lc$L.general
-    if(new==F)
-    {
-     plot(p,L,type="l",main=main,lwd=lwd,xlab=xlab,ylab=ylab,xaxs="i",yaxs="i",las=1, col=col, lty=lty)
-     abline(0,max(L))
-    }
-    else
-    lines(p,L, type="l", lwd=lwd, col=col, lty=lty)
+      L <- x$L.general
+    plot(x$p, L, type="l", main=main, lwd=lwd, xlab=xlab, ylab=ylab, xaxs="i",
+      yaxs="i", las=las, ...)
+    abline(0,max(L))
 }
 
-theor.Lc.plot<-function(type=c("Singh-Maddala","Dagum","lognorm","Pareto","exponential"),parameter=0, col=2, lty=1)
+lines.Lc <- function(x, general=FALSE, lwd=2, ...)
+{
+    if(!general)
+      L <- x$L
+    else
+      L <- x$L.general
+    lines(x$p, L, lwd=lwd, ...)
+}
+
+plot.theorLc <- function(x, parameter=NULL, xlab="p", ylab="L(p)", lwd=2, las=1, ...)
 {
   dummy <- (0:1000)*0.001
-  switch(match.arg(type),
-  "Singh-Maddala"=lines(dummy,Lc.singh(dummy,parameter=parameter),col=col,type="l",lty=lty),
-  Dagum=lines(dummy,Lc.dagum(dummy,parameter=parameter),col=col,type="l",lty=lty),
-  lognorm=lines(dummy,Lc.lognorm(dummy,parameter=parameter),col=col,type="l",lty=lty),
-  Pareto =lines(dummy,Lc.pareto(dummy,parameter), col=col,type="l",lty=lty),  
-  exponential = lines(dummy, Lc.exp(dummy), col=col, type="l", lty=lty))
+  if(is.null(parameter))
+    plot(dummy, x(dummy), type="l", xlab=xlab, ylab=ylab, xaxs="i", yaxs="i",
+      lwd=lwd, las=las, ...)
+  else
+    plot(dummy, x(dummy,parameter=parameter), type="l", xlab=xlab,
+      ylab=ylab, xaxs="i", yaxs="i", lwd=lwd, las=las, ...)
+  abline(0,1)
 }
 
-theor.Lc<-function(p,parameter=0,type=c("Singh-Maddala","Dagum","lognorm","Pareto","exponential"))
-{ 
-  switch(match.arg(type), 
-  "Singh-Maddala" = Lc.singh(p,parameter=parameter),
-  Dagum = Lc.dagum(p,parameter=parameter),
-  lognorm = Lc.lognorm(p,parameter=parameter),
-  Pareto = Lc.pareto(p,parameter=parameter),  
-  exponential = Lc.exp(p))
+lines.theorLc <- function(x, parameter=NULL, lwd=2, col=2, ...)
+{
+  dummy <- (0:1000)*0.001
+  if(is.null(parameter))
+    lines(dummy, x(dummy), lwd=lwd, col=col, ...)
+  else
+    lines(dummy, x(dummy,parameter=parameter), lwd=lwd, col=col, ...)
+}
+
+theorLc <- function(type=c("Singh-Maddala", "Dagum", "lognorm", "Pareto",
+    "exponential"), parameter=0)
+{
+  switch(match.arg(type),
+  "Singh-Maddala" = rval <- function(p) {Lc.singh(p,parameter=parameter)},
+  Dagum = rval <- function(p) {Lc.dagum(p,parameter=parameter)},
+  lognorm = rval <- function(p) {Lc.lognorm(p,parameter=parameter)},
+  Pareto = rval <- function(p) {Lc.pareto(p,parameter=parameter)},
+  exponential = rval <- function(p) {Lc.exp(p)})
+  class(rval) <- "theorLc"
+  return(rval)
 }
 
 Lc.exp <- function(p)
@@ -89,6 +109,7 @@ Lc.exp <- function(p)
   elc <- p - elc
   elc
 }
+class(Lc.exp) <- "theorLc"
 
 Lc.lognorm <- function(p, parameter=1)
 {
@@ -96,59 +117,63 @@ Lc.lognorm <- function(p, parameter=1)
     sigma <- parameter[1]
   else
   {
-    cat("inadmissible parameter. default parameter=1 is used. \n")
+    warning("inadmissible parameter. default parameter=1 is used.")
     sigma <- 1
   }
   loglc <- p
   loglc[!loglc==0 & !loglc==1] <- pnorm(qnorm(loglc[!loglc==0 & !loglc==1]) - sigma)
   loglc
 }
+class(Lc.lognorm) <- "theorLc"
 
 Lc.pareto <- function(p, parameter=2)
 {
   if(parameter[1]>1) k<-(parameter[1]-1)/parameter[1]
   else
   {
-    cat("inadmissible parameter. default parameter=2 is used. \n")
+    warning("inadmissible parameter. default parameter=2 is used.")
     k <- 0.5
   }
   parlc <- 1-((1-p)^k)
   parlc
 }
+class(Lc.pareto) <- "theorLc"
 
-Lc.singh <- function(p, parameter=c(2,2)) 
-{ 
+Lc.singh <- function(p, parameter=c(2,2))
+{
   if(!(is.na(parameter[2]))&(parameter[1]>0)&(parameter[1]<2+parameter[2]))
   {
     b <- parameter[1]-1
     d <- 1/(parameter[2]+1)
   }
-  else 
+  else
   {
-    cat("inadmissible parameter. default parameter=c(2,2) is used. \n")
-    b <- 1 
+    warning("inadmissible parameter. default parameter=c(2,2) is used.")
+    b <- 1
     d <- 1/3
   }
   smlc <- pbeta((1-(1-p)^b), (1+d), (b-d))
-  smlc 
-} 
+  smlc
+}
+class(Lc.singh) <- "theorLc"
 
-Lc.dagum <- function(p, parameter=c(2,2)) 
-{ 
+Lc.dagum <- function(p, parameter=c(2,2))
+{
   if(!(is.na(parameter[2]))&(parameter[1]>1))
   {
     a <- 1/parameter[1]
     b <- parameter[2]
   }
-  else 
+  else
   {
-    cat("inadmissible parameter. default parameter=c(2,2) is used. \n")
-    a <- 0.5 
+    warning("inadmissible parameter. default parameter=c(2,2) is used.")
+    a <- 0.5
     b <- 2
   }
   daglc <- pbeta((p^b), (a+1/b), (1-a))
-  daglc 
-} 
+  daglc
+}
+class(Lc.dagum) <- "theorLc"
 
 Lc.mehran <- function(x,n)
 {
@@ -169,7 +194,7 @@ Lc.mehran <- function(x,n)
   beta1 <- (L[2:k]-L[1:(k-1)])/(p[2:k]-p[1:(k-1)])
   beta2 <- (K[2:k]-K[1:(k-1)])/(q[2:k]-q[1:(k-1)])
   beta2 <- beta2[2:(k-1)]
-  beta <- rep(0,(k-2)) 
+  beta <- rep(0,(k-2))
   for(i in 1:(k-2))
   {
     if(beta1[i]>beta2[i])
@@ -180,19 +205,20 @@ Lc.mehran <- function(x,n)
     else
       beta[i] <- beta2[i]
   }
-  c <- L[2:(k-1)] - beta*p[2:(k-1)]
+  d <- L[2:(k-1)] - beta*p[2:(k-1)]
   if(k==3)
     q <- NULL
   else
-    q <- (c[2:(k-2)]-c[1:(k-3)])/(beta[1:(k-3)]-beta[2:(k-2)])
+    q <- (d[2:(k-2)]-d[1:(k-3)])/(beta[1:(k-3)]-beta[2:(k-2)])
   q <- c(q,1)
-  K <- beta*q + c
+  K <- beta*q + d
   L <- c(0,0,K,1)
-  p <- c(0,-c[1]/beta[1],q,1)
+  p <- c(0,-d[1]/beta[1],q,1)
   L <- L[is.finite(p)]
   p <- p[is.finite(p)]
   Lc.max <- list(p,L)
   names(Lc.max) <- c("p", "L")
+  class(Lc.max) <- "Lc"
   Lc.max
 }
 
@@ -202,22 +228,19 @@ major <- function(x,y)
     y <- sort(y)
     n <- length(x)
     if((length(y)==n)&(sum(x)==sum(y)))
-    {
-        if(sum((cumsum(x)-cumsum(y))<=0)==n) result <- T
-        else result <- F
-        result
-    }
+        all((cumsum(x)-cumsum(y))<=0)
     else
-        cat("incomparable arguments \n")
+        stop("incomparable arguments")
 }
 
-Pen <- function(x, main="Pen Parade", ylab=expression(x[(i)]/bar(x)), 
-xlab=expression(i/n), col=4, lwd=2, las=1)
+Pen <- function(x, main="Pen Parade", ylab=expression(x[(i)]/bar(x)),
+  xlab=expression(i/n), col=4, lwd=2, las=1, ...)
 {
   n <- length(x)
   a <- (0:n)/n
   b <- sort(c(0,x))/mean(x)
-  plot(a,b, type="S", main=main, ylab=ylab,xlab=xlab, xaxs="i", yaxs="i",col=col, lwd=lwd, las=las)
+  plot(a, b, type="S", main=main, ylab=ylab,xlab=xlab, xaxs="i", yaxs="i",
+    col=col, lwd=lwd, las=las, ...)
   abline(1,0, lty=3)
 }
 
@@ -225,11 +248,9 @@ Gini <- function(x)
 {
     n <- length(x)
     x <- sort(x)
-    i <- 1:n
-    G <- t(x)%*%i
+    G <- sum(x * 1:n)
     G <- 2*G/(n*sum(x))
-    G <- G - 1 - (1/n)
-    as.vector(G)
+    G - 1 - (1/n)
 }
 
 RS <- function(x)
@@ -241,8 +262,9 @@ RS <- function(x)
 
 Atkinson <- function(x, parameter=0.5)
 {
+    if(is.null(parameter)) parameter <- 0.5
     if(parameter==1)
-        A <- 1 - ((prod(x)^(1/length(x)))/mean(x))
+        A <- 1 - (exp(mean(log(x)))/mean(x))
     else
         {
             x <- (x/mean(x))^(1-parameter)
@@ -251,16 +273,17 @@ Atkinson <- function(x, parameter=0.5)
     A
 }
 
-var.coeff <- function(x, square=F)
+var.coeff <- function(x, square=FALSE)
 {
     n <- length(x)
     V <- sqrt((n-1)*var(x)/n)/mean(x)
-    if(square==T) V <- V^2
+    if(square) V <- V^2
     V
 }
 
 Theil <- function(x, parameter=0)
 {
+  if(is.null(parameter)) parameter <- 0
   if(parameter==0)
   {
     x <- x[!(x==0)]
@@ -270,7 +293,7 @@ Theil <- function(x, parameter=0)
   }
   else
   {
-    Th <- (prod(x)^(1/length(x)))/mean(x)
+    Th <- exp(mean(log(x)))/mean(x)
     Th <- -log(Th)
   }
   Th
@@ -278,7 +301,10 @@ Theil <- function(x, parameter=0)
 
 Herfindahl <- function(x, parameter=1)
 {
-  m <- parameter
+  if(is.null(parameter))
+    m <- 1
+  else
+    m <- parameter
   Herf <- x/sum(x)
   Herf <- Herf^(m+1)
   Herf <- sum(Herf)^(1/m)
@@ -287,6 +313,7 @@ Herfindahl <- function(x, parameter=1)
 
 Kolm <- function(x, parameter=1)
 {
+  if(is.null(parameter)) parameter <- 1
   KM <- parameter * (mean(x)-x)
   KM <- mean(exp(KM))
   KM <- (1/parameter)*log(KM)
@@ -304,7 +331,8 @@ Rosenbluth <- function(x)
 }
 
 entropy <- function(x, parameter=0.5)
-{  
+{
+  if(is.null(parameter)) parameter <- 0.5
   if(parameter==0)
     e <- Theil(x, parameter=1)
   else
@@ -312,14 +340,14 @@ entropy <- function(x, parameter=0.5)
     e <- Theil(x, parameter=0)
   else
   {
-    c <- parameter
-    e <- (x/mean(x))^c
-    e <- mean(e-1)/(c*(c-1))
+    k <- parameter
+    e <- (x/mean(x))^k
+    e <- mean(e-1)/(k*(k-1))
   }
   e
 }
 
-Sen <- function(x,k)
+Sen <- function(x, k)
 {
   x2 <- x[x<k]
   if(length(x2)<1)
@@ -333,7 +361,7 @@ Sen <- function(x,k)
   }
 }
 
-Watts <- function(x,k)
+Watts <- function(x, k)
 {
   x2 <- x[x<k]
   if(length(x2)<1)
@@ -342,12 +370,12 @@ Watts <- function(x,k)
     sum(log(k/x2))/length(x)
 }
 
-Foster <- function(x,k,parameter=1)
+Foster <- function(x, k, parameter=1)
 {
+  if(is.null(parameter)) parameter <- 1
   x2 <- x[x<k]
   if(length(x2)<1)
     0
   else
     sum(((k-x2)/k)^(parameter-1))/length(x)
 }
-

@@ -20,7 +20,8 @@ Rosenbluth(x)
   is sufficient). defaults to "Herfindahl".} }
 \details{\code{conc} is just a wrapper for the concentration measures of
          \code{Herfindahl} and \code{Rosenbluth}
-         (Hall / Tiedemann / Rosenbluth) .
+         (Hall / Tiedemann / Rosenbluth). If parameter is set to \code{NULL}
+         the default from the respective function is used.
 }
 \value{
   the value of the concentration measure
@@ -42,5 +43,5 @@ conc(x)
 # compute coefficient of Hall/Tiedemann/Rosenbluth
 conc(x, type="Rosenbluth")
 }
-\keyword{}
+\keyword{univar}
 

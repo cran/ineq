@@ -8,7 +8,7 @@
  computes the poverty of an (income) vector according to the
 specified poverty measure }
 \usage{
-pov(x,k,parameter=1,type=c("Watts", "Sen", "Foster")) 
+pov(x,k,parameter=1,type=c("Watts", "Sen", "Foster"))
 
 Watts(x,k)
 Sen(x,k)
@@ -24,7 +24,8 @@ Foster(x,k,parameter=1)
 }
 \details{\code{pov} is just a wrapper for the poverty measures of
          \code{Watts}, \code{Sen} and \code{Foster}
-         (Foster / Greer / Thorbecke).
+         (Foster / Greer / Thorbecke). If parameter is set to \code{NULL} the
+         default from the respective function is used.
 
          \code{Foster} gives for parameter 1 the head count ratio and for
          parameter 2 the poverty gap ratio.
@@ -50,5 +51,5 @@ pov(y, 2000)
 # compute head count ratio with poverty boundary 2000
 pov(x, 2000, parameter=1, type="Foster")
 pov(y, 2000, parameter=1, type="Foster")}
-\keyword{}
+\keyword{univar}
 
