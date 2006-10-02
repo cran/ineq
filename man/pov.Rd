@@ -38,7 +38,6 @@ Foster(x,k,parameter=1)
  
 J E Foster: On Economic Poverty: A Survey Of Aggregate Measures, 1984, Advances in Econometrics Vol. 3, 215-251. 
 }
-\author{Achim Zeileis \email{zeileis@ci.tuwien.ac.at}}
 
 \seealso{\code{\link{ineq}}, \code{\link{conc}}}
 

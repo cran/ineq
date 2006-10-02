@@ -13,7 +13,6 @@ Lc.mehran(x,n)
 \value{An object of class \code{"Lc"}, but containing only
   \code{p} and \code{L}.}
 \references{F Mehran: Bounds on the Gini Index Based on Observed Points of the Lorenz Curve, 1975, JASA 70, 64-66. }
-\author{Achim Zeileis \email{zeileis@ci.tuwien.ac.at}}
 
 \seealso{\code{\link{Lc}}, \code{\link{plot.Lc}}, \code{\link{plot.theorLc}}}
 

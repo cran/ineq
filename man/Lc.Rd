@@ -33,7 +33,6 @@ Lc(x, n = rep(1,length(x)), plot = FALSE)
 F A Cowell: Measurement of Inequality, 2000, in A B Atkinson / F Bourguignon (Eds): Handbook of Income Distribution, Amsterdam,
 
 F A Cowell: Measuring Inequality, 1995 Prentice Hall/Harvester Wheatshef.}
-\author{Achim Zeileis \email{zeileis@ci.tuwien.ac.at}}
 
 \seealso{\code{\link{plot.Lc}}, \code{\link{Lc.mehran}},
 \code{\link{plot.theorLc}}}

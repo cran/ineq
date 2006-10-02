@@ -234,7 +234,7 @@ major <- function(x,y)
 }
 
 Pen <- function(x, n = rep(1, length(x)), group = NULL,
-  scaled = TRUE, abline = TRUE, segments = NULL,  
+  scaled = TRUE, abline = TRUE, add = FALSE, segments = NULL,  
   main = "Pen's Parade", ylab = NULL, xlab = NULL, 
   col = NULL, lwd = NULL, las = 1, fill = NULL, ...) 
 {
@@ -243,10 +243,7 @@ Pen <- function(x, n = rep(1, length(x)), group = NULL,
   n <- n[o]
 
   if(!is.null(group)) {
-    if(!is.factor(group)) {
-      warning("`group' has to be a factor.")
-      group <- as.factor(group)
-    }  
+    if(!is.factor(group)) group <- as.factor(group)
     if(is.null(segments)) segments <- TRUE
     if(is.null(fill) && segments) {
       fill <- grey(seq(0.3 ^ 2.2, 0.9 ^ 2.2, length = length(levels(group))) ^ (1/2.2))
@@ -255,6 +252,7 @@ Pen <- function(x, n = rep(1, length(x)), group = NULL,
   } else {
     if(is.null(segments)) segments <- FALSE
   }
+  
   if(is.null(col)) {
     if(segments | !is.null(fill)) col <- 1
       else col <- 4
@@ -278,7 +276,7 @@ Pen <- function(x, n = rep(1, length(x)), group = NULL,
   
   n <- cumsum(c(0, n))/sum(n)   
 
-  plot(c(0, 1), c(0, max(x)), type = "n", main = main, ylab = ylab, xlab = xlab, 
+  if(!add) plot(c(0, 1), c(0, max(x)), type = "n", main = main, ylab = ylab, xlab = xlab, 
       xaxs = "i", yaxs = "i", las = las, ...)
 
   if(segments) {
@@ -295,7 +293,7 @@ Pen <- function(x, n = rep(1, length(x)), group = NULL,
     if(!is.null(fill)) polygon(c(n2, 1, 0), c(x2, 0, 0), col = fill, border = col)
   }
   
-  if(abline) abline(h = mean(x), lty = 3)
+  if(abline & !add) abline(h = mean(x), lty = 3)
   box()
 }
 

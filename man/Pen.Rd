@@ -5,7 +5,7 @@
  plots Pen's Parade of a vector \code{x}}
 \usage{
 Pen(x, n = rep(1, length(x)), group = NULL,
-  scaled = TRUE, abline = TRUE, segments = NULL,  
+  scaled = TRUE, abline = TRUE, add = FALSE, segments = NULL,  
   main = "Pen's Parade", ylab = NULL, xlab = NULL, 
   col = NULL, lwd = NULL, las = 1, fill = NULL, \dots)  
 }
@@ -15,6 +15,7 @@ Pen(x, n = rep(1, length(x)), group = NULL,
  \item{group}{a factor coding different groups, must be same length as \code{x}. See also details.}
  \item{scaled}{logical. Should Pen's parade be divided by \code{mean(x)}?}
  \item{abline}{logical. Should a horizontal line for the mean be drawn?}
+ \item{add}{logical. Should the plot be added to an existing plot?}
  \item{segments}{logical. Should histogram-like segments be drawn?}
  \item{col}{a (vector of) color(s) for drawing the curve.}
  \item{fill}{a (vector of) color(s) for filling the area under the curve.}
@@ -41,7 +42,6 @@ F A Cowell: Measurement of Inequality, 2000, in A B Atkinson / F Bourguignon (Ed
 F A Cowell: Measuring Inequality, 1995 Prentice Hall/Harvester Wheatshef,
 
 J Pen: Income Distribution, 1971, Harmondsworth: Allen Lane.}
-\author{Achim Zeileis \email{zeileis@ci.tuwien.ac.at}}
 
 \seealso{\code{\link{Lc}}, \code{\link{plot.Lc}}}
 
