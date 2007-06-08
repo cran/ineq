@@ -38,11 +38,11 @@ entropy(x, parameter = 0.5)
          the respective function is used.
 
          \code{Gini} is the Gini coefficient, \code{RS} is the the Ricci-Schutz
-         coefficient (also called Pietra큦 measure), \code{Atkinson} gives
-         Atkinson큦 measure and \code{Kolm} computes Kolm큦 measure.
+         coefficient (also called Pietra's measure), \code{Atkinson} gives
+         Atkinson's measure and \code{Kolm} computes Kolm's measure.
 
-         If the parameter in \code{Theil} is 0 Theil큦 entropy measure is
-         computed, for every other value Theil큦 second measure is
+         If the parameter in \code{Theil} is 0 Theil's entropy measure is
+         computed, for every other value Theil's second measure is
          computed.
 
          \code{ineq(x, type="var")} and \code{var.coeff(x)} respectively
@@ -51,7 +51,7 @@ entropy(x, parameter = 0.5)
          compute the squared coefficient of variation.
 
          \code{entropy} computes the generalized entropy, which is for
-         parameter 1 equal to Theil큦 entropy coefficient and for parameter
+         parameter 1 equal to Theil's entropy coefficient and for parameter
          0 equal to the second measure of Theil.
 }
 \value{
