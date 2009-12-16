@@ -2,41 +2,48 @@
 \alias{pov}
 \alias{Watts}
 \alias{Sen}
+\alias{SST}
 \alias{Foster}
 \title{Poverty Measures}
 \description{
  computes the poverty of an (income) vector according to the
 specified poverty measure }
 \usage{
-pov(x, k, parameter = NULL,type = c("Watts", "Sen", "Foster"))
+pov(x, k, parameter = NULL, type = c("Watts", "Sen", "SST", "Foster"))
 
-Watts(x,k)
-Sen(x,k)
-Foster(x,k,parameter=1)
+Watts(x, k)
+Sen(x, k)
+SST(x, k)
+Foster(x, k, parameter = 1)
 }
 \arguments{
  \item{x}{a vector containing at least non-negative elements}
- \item{k}{a constant giving the absolute poverty boundary}
+ \item{k}{a constant giving the absolute poverty line}
  \item{parameter}{parameter of the poverty measure (if set to \code{NULL}
   the default parameter of the respective measure is used)}
  \item{type}{character string giving the measure used to compute poverty
-    coefficient must be one of the strings in the default argument (the first
-    character is sufficient). defaults to "Watts".}
+    coefficient must be one of the strings in the default argument. Defaults to "Watts".}
 }
 \details{\code{pov} is just a wrapper for the poverty measures of
-         \code{Watts}, \code{Sen} and \code{Foster}
+         \code{Watts}, \code{Sen}, \code{SST}, and \code{Foster}
          (Foster / Greer / Thorbecke). If parameter is set to \code{NULL} the
          default from the respective function is used.
 
-         \code{Foster} gives for parameter 1 the head count ratio and for
+         \code{Foster} gives for parameter 1 the headcount ratio and for
          parameter 2 the poverty gap ratio.
 }
 \value{
   the value of the poverty measure
 }
-\references{Buhong Zheng: Aggregate Poverty Measures, 1997, Journal of Economic Surveys Vol.11 No.2, 123-162. 
- 
-J E Foster: On Economic Poverty: A Survey Of Aggregate Measures, 1984, Advances in Econometrics Vol. 3, 215-251. 
+\references{
+  Foster, J. E. (1984). On Economic Poverty: A Survey of Aggregate Measures.
+    \emph{Advances in Econometrics}, \bold{3}, 215--251. 
+
+  Shorroks, A. F. (1995). Revisiting the Sen Poverty Index.
+    \emph{Econometrica}, \bold{63}(5), 1225--1230.
+
+  Zheng, B. (1997). Aggregate Poverty Measures.
+    \emph{Journal of Economic Surveys}, \bold{11}, 123--162.  
 }
 
 \seealso{\code{\link{ineq}}, \code{\link{conc}}}
@@ -45,11 +52,10 @@ J E Foster: On Economic Poverty: A Survey Of Aggregate Measures, 1984, Advances 
 # generate vectors (of incomes)
 x <- c(541, 1463, 2445, 3438, 4437, 5401, 6392, 8304, 11904, 22261)
 y <- c(841, 2063, 2445, 3438, 4437, 5401, 6392, 8304, 11304, 21961)
-# compute Watts index with poverty boundary 2000
+# compute Watts index with poverty line 2000
 pov(x, 2000)
 pov(y, 2000)
-# compute head count ratio with poverty boundary 2000
+# compute headcount ratio with poverty line 2000
 pov(x, 2000, parameter=1, type="Foster")
 pov(y, 2000, parameter=1, type="Foster")}
 \keyword{univar}
-

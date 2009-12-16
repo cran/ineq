@@ -19,12 +19,13 @@ conc <- function(x, parameter=NULL, type=c("Herfindahl", "Rosenbluth"))
   Rosenbluth = Rosenbluth(x))
 }
 
-pov <- function(x, k, parameter=NULL, type=c("Watts", "Sen", "Foster"))
+pov <- function(x, k, parameter = NULL, type = c("Watts", "Sen", "SST", "Foster"))
 {
   switch(match.arg(type),
-  Watts = Watts(x,k),
-  Sen = Sen(x,k),
-  Foster = Foster(x,k,parameter=parameter))
+  Watts = Watts(x, k),
+  Sen = Sen(x, k),
+  SST = SST(x, k),
+  Foster = Foster(x, k, parameter = parameter))
 }
 
 Lc <- function(x, n=rep(1,length(x)), plot=FALSE)
@@ -412,6 +413,16 @@ Sen <- function(x, k)
     I <- sum((k-x2)/k)/length(x2)
     G <- Gini(x2)
     H*(I+(1-I)*G)
+  }
+}
+
+SST <- function(x, k)
+{
+  x2 <- sort(x[x < k])
+  n <- length(x)
+  q <- length(x2)
+  if(q < 1) 0 else {
+    sum((2 * n - 2 * 1:q + 1) * (k - x2)/k)/n^2
   }
 }
 
