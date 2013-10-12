@@ -26,6 +26,7 @@ export(
   ## empirical Lorenz curves
   "Lc",
   "Lc.mehran",
+  "Lasym",
 
   ## theoretical Lorenz curves
   "theorLc",

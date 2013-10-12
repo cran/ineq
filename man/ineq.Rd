@@ -15,7 +15,7 @@ specified inequality measure }
 ineq(x, parameter = NULL, type = c("Gini", "RS", "Atkinson", "Theil", "Kolm", "var",
      "square.var", "entropy"))
 
-Gini(x)
+Gini(x, corr = FALSE)
 RS(x)
 Atkinson(x, parameter = 0.5)
 Theil(x, parameter = 0)
@@ -30,6 +30,8 @@ entropy(x, parameter = 0.5)
 \item{type}{character string giving the measure used to compute inequality.
   must be one of the strings in the default argument (the first character
   is sufficient). defaults to "Gini".}
+\item{corr}{logical. Argument of the function \code{Gini} specifying whether
+  or not a finite sample correction should be applied.}
 \item{square}{logical. Argument of the function \code{var.coeff}, for details
   see below.}}
 \details{\code{ineq} is just a wrapper for the inequality measures \code{Gini},
