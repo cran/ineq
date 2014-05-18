@@ -3,7 +3,10 @@ Pen <- function(x, n = rep(1, length(x)), group = NULL,
   main = "Pen's Parade", ylab = NULL, xlab = NULL, 
   col = NULL, lwd = NULL, las = 1, fill = NULL, ...) 
 {
-  o <- order(as.numeric(x))
+  ina <- !is.na(x)    
+  n <- n[ina]
+  x <- as.numeric(x)[ina]
+  o <- order(x)
   x <- x[o]
   n <- n[o]
 

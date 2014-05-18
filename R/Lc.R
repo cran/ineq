@@ -1,6 +1,8 @@
-Lc <- function(x, n = rep(1, length(x)), plot=FALSE)
+Lc <- function(x, n = rep(1, length(x)), plot = FALSE)
 {
-    x <- as.numeric(x)
+    ina <- !is.na(x)    
+    n <- n[ina]
+    x <- as.numeric(x)[ina]
     k <- length(x)
     o <- order(x)
     x <- x[o]
@@ -14,8 +16,7 @@ Lc <- function(x, n = rep(1, length(x)), plot=FALSE)
     Lc <- list(p,L,L2)
     names(Lc) <- c("p", "L", "L.general")
     class(Lc) <- "Lc"
-    if(plot)
-        plot(Lc)
+    if(plot) plot(Lc)
     Lc
 }
 
@@ -149,7 +150,6 @@ class(Lc.dagum) <- "theorLc"
 
 Lc.mehran <- function(x,n)
 {
-  x <- as.numeric(x)
   Lc.min <- Lc(x,n=n)
   p <- Lc.min$p
   L <- Lc.min$L
@@ -195,8 +195,10 @@ Lc.mehran <- function(x,n)
   Lc.max
 }
 
-Lasym <- function(x, n = rep(1, length(x)), interval = FALSE) {
-    x <- as.numeric(x)
+Lasym <- function(x, n = rep(1, length(x)), interval = FALSE, na.rm = TRUE)
+{
+    if(!na.rm) return(rep.int(NA_real_, 1L + as.integer(interval)))
+    x <- as.numeric(na.omit(x))
     o <- order(x)
     x <- x[o]
     w <- n[o]
@@ -222,4 +224,3 @@ Lasym <- function(x, n = rep(1, length(x)), interval = FALSE) {
     
     Lac
 }
-

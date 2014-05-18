@@ -9,12 +9,12 @@
  computes the poverty of an (income) vector according to the
 specified poverty measure }
 \usage{
-pov(x, k, parameter = NULL, type = c("Watts", "Sen", "SST", "Foster"))
+pov(x, k, parameter = NULL, type = c("Watts", "Sen", "SST", "Foster"), na.rm = TRUE)
 
-Watts(x, k)
-Sen(x, k)
-SST(x, k)
-Foster(x, k, parameter = 1)
+Watts(x, k, na.rm = TRUE)
+Sen(x, k, na.rm = TRUE)
+SST(x, k, na.rm = TRUE)
+Foster(x, k, parameter = 1, na.rm = TRUE)
 }
 \arguments{
  \item{x}{a vector containing at least non-negative elements}
@@ -23,6 +23,9 @@ Foster(x, k, parameter = 1)
   the default parameter of the respective measure is used)}
  \item{type}{character string giving the measure used to compute poverty
     coefficient must be one of the strings in the default argument. Defaults to "Watts".}
+ \item{na.rm}{logical. Should missing values (\code{NA}s) be removed
+   prior to computations? If set to \code{FALSE} the computations yield
+   \code{NA}.}
 }
 \details{\code{pov} is just a wrapper for the poverty measures of
          \code{Watts}, \code{Sen}, \code{SST}, and \code{Foster}

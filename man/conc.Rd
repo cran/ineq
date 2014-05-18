@@ -7,10 +7,10 @@
  computes the concentration within a vector according to the
 specified concentration measure }
 \usage{
-conc(x, parameter = NULL, type = c("Herfindahl", "Rosenbluth"))
+conc(x, parameter = NULL, type = c("Herfindahl", "Rosenbluth"), na.rm = TRUE)
 
-Herfindahl(x, parameter = 1)
-Rosenbluth(x)
+Herfindahl(x, parameter = 1, na.rm = TRUE)
+Rosenbluth(x, na.rm = TRUE)
 }
 \arguments{
  \item{x}{a vector containing non-negative elements}
@@ -18,7 +18,11 @@ Rosenbluth(x)
   the default parameter of the respective measure is used)}
 \item{type}{character string giving the measure used to compute concentration.
   must be one of the strings in the default argument (the first character
-  is sufficient). defaults to "Herfindahl".} }
+  is sufficient). defaults to "Herfindahl".} 
+\item{na.rm}{logical. Should missing values (\code{NA}s) be removed
+  prior to computations? If set to \code{FALSE} the computations yield
+  \code{NA}.}
+}
 \details{\code{conc} is just a wrapper for the concentration measures of
          \code{Herfindahl} and \code{Rosenbluth}
          (Hall / Tiedemann / Rosenbluth). If parameter is set to \code{NULL}

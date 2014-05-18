@@ -8,7 +8,7 @@ Coefficient of asymmetry in the Lorenz curve.
 }
 
 \usage{
-Lasym(x, n = rep(1, length(x)), interval = FALSE)
+Lasym(x, n = rep(1, length(x)), interval = FALSE, na.rm = TRUE)
 }
 
 \arguments{
@@ -17,6 +17,9 @@ Lasym(x, n = rep(1, length(x)), interval = FALSE)
  \item{interval}{logical. In the case where there are observations
    exactly equal to the mean, either an interval of asymmetry coefficients
    can be returned or their midpoint.}
+ \item{na.rm}{logical. Should missing values (\code{NA}s) be removed
+   prior to computations? If set to \code{FALSE} the computations yield
+   \code{NA}.}
 }
 
 \details{

@@ -13,15 +13,15 @@
 specified inequality measure }
 \usage{
 ineq(x, parameter = NULL, type = c("Gini", "RS", "Atkinson", "Theil", "Kolm", "var",
-     "square.var", "entropy"))
+     "square.var", "entropy"), na.rm = TRUE)
 
-Gini(x, corr = FALSE)
-RS(x)
-Atkinson(x, parameter = 0.5)
-Theil(x, parameter = 0)
-Kolm(x, parameter = 1)
-var.coeff(x, square = FALSE)
-entropy(x, parameter = 0.5)
+Gini(x, corr = FALSE, na.rm = TRUE)
+RS(x, na.rm = TRUE)
+Atkinson(x, parameter = 0.5, na.rm = TRUE)
+Theil(x, parameter = 0, na.rm = TRUE)
+Kolm(x, parameter = 1, na.rm = TRUE)
+var.coeff(x, square = FALSE, na.rm = TRUE)
+entropy(x, parameter = 0.5, na.rm = TRUE)
 }
 \arguments{
  \item{x}{a vector containing at least non-negative elements}
@@ -33,7 +33,11 @@ entropy(x, parameter = 0.5)
 \item{corr}{logical. Argument of the function \code{Gini} specifying whether
   or not a finite sample correction should be applied.}
 \item{square}{logical. Argument of the function \code{var.coeff}, for details
-  see below.}}
+  see below.}
+\item{na.rm}{logical. Should missing values (\code{NA}s) be removed
+  prior to computations? If set to \code{FALSE} the computations yield
+  \code{NA}.}
+}
 \details{\code{ineq} is just a wrapper for the inequality measures \code{Gini},
          \code{RS}, \code{Atkinson}, \code{Theil}, \code{Kolm},\code{var.coeff},
          \code{entropy}. If parameter is set to \code{NULL} the default from
