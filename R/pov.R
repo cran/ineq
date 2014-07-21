@@ -9,7 +9,7 @@ pov <- function(x, k, parameter = NULL, type = c("Watts", "Sen", "SST", "Foster"
 
 Sen <- function(x, k, na.rm = TRUE)
 {
-  if(!na.rm) return(NA_real_)
+  if(!na.rm && any(is.na(x))) return(NA_real_)
   x <- as.numeric(na.omit(x))
   x2 <- x[x<k]
   if(length(x2)<1)
@@ -25,7 +25,7 @@ Sen <- function(x, k, na.rm = TRUE)
 
 SST <- function(x, k, na.rm = TRUE)
 {
-  if(!na.rm) return(NA_real_)
+  if(!na.rm && any(is.na(x))) return(NA_real_)
   x <- as.numeric(na.omit(x))
   x2 <- sort(x[x < k])
   n <- length(x)
@@ -37,7 +37,7 @@ SST <- function(x, k, na.rm = TRUE)
 
 Watts <- function(x, k, na.rm = TRUE)
 {
-  if(!na.rm) return(NA_real_)
+  if(!na.rm && any(is.na(x))) return(NA_real_)
   x <- as.numeric(na.omit(x))
   x2 <- x[x<k]
   if(length(x2)<1)
@@ -48,7 +48,7 @@ Watts <- function(x, k, na.rm = TRUE)
 
 Foster <- function(x, k, parameter = 1, na.rm = TRUE)
 {
-  if(!na.rm) return(NA_real_)
+  if(!na.rm && any(is.na(x))) return(NA_real_)
   x <- as.numeric(na.omit(x))
   if(is.null(parameter)) parameter <- 1
   x2 <- x[x<k]

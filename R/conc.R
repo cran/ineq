@@ -7,7 +7,7 @@ conc <- function(x, parameter = NULL, type = c("Herfindahl", "Rosenbluth"), na.r
 
 Herfindahl <- function(x, parameter = 1, na.rm = TRUE)
 {
-  if(!na.rm) return(NA_real_)
+  if(!na.rm && any(is.na(x))) return(NA_real_)
   x <- as.numeric(na.omit(x))
   m <- if(is.null(parameter)) 1 else parameter
   Herf <- x/sum(x)
@@ -18,7 +18,7 @@ Herfindahl <- function(x, parameter = 1, na.rm = TRUE)
 
 Rosenbluth <- function(x, na.rm = TRUE)
 {
-  if(!na.rm) return(NA_real_)
+  if(!na.rm && any(is.na(x))) return(NA_real_)
   x <- as.numeric(na.omit(x))
   n <- length(x)
   x <- sort(x)

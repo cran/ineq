@@ -1,0 +1,418 @@
+
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "ineq"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('ineq')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("Lasym")
+> ### * Lasym
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Lasym
+> ### Title: Lorenz Asymmetry Coefficient
+> ### Aliases: Lasym
+> ### Keywords: misc
+> 
+> ### ** Examples
+> 
+> ## Examples from Damgaard & Weiner (2000)
+> 
+> ## Figure 2
+> x <- rep(c(50/9, 50), c(9, 1))
+> y <- rep(c(2, 18), c(5, 5))
+> plot(table(x))
+> plot(table(y))
+> 
+> ## statistics
+> mean(x)
+[1] 10
+> mean(y)
+[1] 10
+> Gini(x, corr = TRUE)
+[1] 0.4444444
+> Gini(y, corr = TRUE)
+[1] 0.4444444
+> Lasym(x)
+[1] 1.46
+> Lasym(y)
+[1] 0.74
+> 
+> ## Figure 3
+> plot(Lc(x))
+> lines(Lc(y), col = "slategray")
+> abline(1, -1, lty = 2)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Lc")
+> ### * Lc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Lc
+> ### Title: Lorenz Curve
+> ### Aliases: Lc
+> ### Keywords: misc
+> 
+> ### ** Examples
+> 
+> ## Load and attach income (and metadata) set from Ilocos, Philippines
+> data(Ilocos)
+> attach(Ilocos)
+> ## extract and rescale income for the provinces "Pangasinan" und "La Union"
+> income.p <- income[province=="Pangasinan"]/10000
+> income.u <- income[province=="La Union"]/10000
+> 
+> ## compute the Lorenz curves
+> Lc.p <- Lc(income.p)
+> Lc.u <- Lc(income.u)
+> ## it can be seen the the inequality in La Union is higher than in
+> ## Pangasinan because the respective Lorenz curve takes smaller values.
+> plot(Lc.p)
+> lines(Lc.u, col=2)
+> ## the picture becomes even clearer with generalized Lorenz curves
+> plot(Lc.p, general=TRUE)
+> lines(Lc.u, general=TRUE, col=2)
+> ## inequality measures emphasize these results, e.g. Atkinson's measure
+> ineq(income.p, type="Atkinson")
+[1] 0.1291856
+> ineq(income.u, type="Atkinson")
+[1] 0.1672924
+> ## or Theil's entropy measure
+> ineq(income.p, type="Theil", parameter=0)
+[1] 0.2837236
+> ineq(income.u, type="Theil", parameter=0)
+[1] 0.3622122
+> 
+> 
+> 
+> # income distribution of the USA in 1968 (in 10 classes)
+> # x vector of class means, n vector of class frequencies
+> x <- c(541, 1463, 2445, 3438, 4437, 5401, 6392, 8304, 11904, 22261)
+> n <- c(482, 825, 722, 690, 661, 760, 745, 2140, 1911, 1024)
+> 
+> # compute minimal Lorenz curve (= no inequality in each group)
+> Lc.min <- Lc(x, n=n)
+> # compute maximal Lorenz curve (limits of Mehran)
+> Lc.max <- Lc.mehran(x,n)
+> # plot both Lorenz curves in one plot
+> plot(Lc.min)
+> lines(Lc.max, col=4)
+> 
+> # add the theoretic Lorenz curve of a Lognormal-distribution with variance 0.78
+> lines(Lc.lognorm, parameter=0.78)
+> # add the theoretic Lorenz curve of a Dagum-distribution
+> lines(Lc.dagum, parameter=c(3.4,2.6))
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'Ilocos'
+
+> nameEx("Lc.mehran")
+> ### * Lc.mehran
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Lc.mehran
+> ### Title: Mehran Bounds For Lorenz Curves
+> ### Aliases: Lc.mehran
+> ### Keywords: misc
+> 
+> ### ** Examples
+> 
+> # income distribution of the USA in 1968 (in 10 classes)
+> # x vector of class means, n vector of class frequencies
+> x <- c(541, 1463, 2445, 3438, 4437, 5401, 6392, 8304, 11904, 22261)
+> n <- c(482, 825, 722, 690, 661, 760, 745, 2140, 1911, 1024)
+> 
+> # compute minimal Lorenz curve (= no inequality in each group)
+> Lc.min <- Lc(x, n=n)
+> # compute maximal Lorenz curve (limits of Mehran)
+> Lc.max <- Lc.mehran(x,n)
+> # plot both Lorenz curves in one plot
+> plot(Lc.min)
+> lines(Lc.max, col=4)
+> 
+> # add the theoretic Lorenz curve of a Lognormal-distribution with variance 0.78
+> lines(Lc.lognorm, parameter=0.78)
+> # add the theoretic Lorenz curve of a Dagum-distribution
+> lines(Lc.dagum, parameter=c(3.4,2.6))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Pen")
+> ### * Pen
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Pen
+> ### Title: Pen's Parade
+> ### Aliases: Pen
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> # load and attach Philippine income data
+> data(Ilocos)
+> attach(Ilocos)
+> # plot Pen's Parade of income
+> Pen(income)
+> Pen(income, fill = hsv(0.1, 0.3, 1))
+> 
+> # income distribution of the USA in 1968 (in 10 classes)
+> # x vector of class means, n vector of class frequencies
+> x <- c(541, 1463, 2445, 3438, 4437, 5401, 6392, 8304, 11904, 22261)
+> n <- c(482, 825, 722, 690, 661, 760, 745, 2140, 1911, 1024)
+> Pen(x, n = n)
+> # create artificial grouping variable
+> myfac <- factor(c(1, 1, 1, 2, 2, 2, 3, 3, 3, 3))
+> Pen(x, n = n, group = myfac)
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'Ilocos'
+
+> nameEx("conc")
+> ### * conc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: conc
+> ### Title: Concentration Measures
+> ### Aliases: conc Herfindahl Rosenbluth
+> ### Keywords: univar
+> 
+> ### ** Examples
+> 
+> # generate vector (of sales)
+> x <- c(541, 1463, 2445, 3438, 4437, 5401, 6392, 8304, 11904, 22261)
+> # compute Herfindahl coefficient with parameter 1
+> conc(x)
+[1] 0.1840812
+> # compute coefficient of Hall/Tiedemann/Rosenbluth
+> conc(x, type="Rosenbluth")
+[1] 0.1859051
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ineq")
+> ### * ineq
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ineq
+> ### Title: Inequality Measures
+> ### Aliases: ineq Gini RS Atkinson Theil Kolm var.coeff entropy
+> ### Keywords: univar
+> 
+> ### ** Examples
+> 
+> # generate vector (of incomes)
+> x <- c(541, 1463, 2445, 3438, 4437, 5401, 6392, 8304, 11904, 22261)
+> # compute Gini coefficient
+> ineq(x)
+[1] 0.4620911
+> # compute Atkinson coefficient with parameter=0.5
+> ineq(x, parameter=0.5, type="Atkinson")
+[1] 0.1796591
+> 
+> 
+> 
+> cleanEx()
+> nameEx("major")
+> ### * major
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: major
+> ### Title: Majorization
+> ### Aliases: major
+> ### Keywords: logic
+> 
+> ### ** Examples
+> 
+> # generate vectors (of incomes)
+> x <- c(541, 1463, 2445, 3438, 4437, 5401, 6392, 8304, 11904, 22261)
+> y <- c(841, 2063, 2445, 3438, 4437, 5401, 6392, 8304, 11304, 21961)
+> # test whether x majorizes y (TRUE, because y is result of
+> # Pigou-Dalton-transfers)
+> major(x,y)
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.Lc")
+> ### * plot.Lc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.Lc
+> ### Title: Plot Lorenz Curve
+> ### Aliases: plot.Lc lines.Lc
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> ## Load and attach income (and metadata) set from Ilocos, Philippines
+> data(Ilocos)
+> attach(Ilocos)
+> ## extract and rescale income for the provinces "Pangasinan" und "La Union"
+> income.p <- income[province=="Pangasinan"]/10000
+> income.u <- income[province=="La Union"]/10000
+> ## compute the Lorenz curves
+> Lc.p <- Lc(income.p)
+> Lc.u <- Lc(income.u)
+> ## plot both Lorenz curves
+> plot(Lc.p)
+> lines(Lc.u, col=2)
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'Ilocos'
+
+> nameEx("plot.theorLc")
+> ### * plot.theorLc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.theorLc
+> ### Title: Plot Theoretical Lorenz Curves
+> ### Aliases: plot.theorLc lines.theorLc
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> # income distribution of the USA in 1968 (in 10 classes)
+> # x vector of class means, n vector of class frequencies
+> x <- c(541, 1463, 2445, 3438, 4437, 5401, 6392, 8304, 11904, 22261)
+> n <- c(482, 825, 722, 690, 661, 760, 745, 2140, 1911, 1024)
+> 
+> # compute minimal Lorenz curve (= no inequality in each group)
+> Lc.min <- Lc(x, n=n)
+> # compute maximal Lorenz curve (limits of Mehran)
+> Lc.max <- Lc.mehran(x,n)
+> # plot both Lorenz curves in one plot
+> plot(Lc.min)
+> lines(Lc.max, col=4)
+> 
+> # add the theoretic Lorenz curve of a Lognormal-distribution with variance 0.78
+> lines(Lc.lognorm, parameter=0.78)
+> # add the theoretic Lorenz curve of a Dagum-distribution
+> lines(Lc.dagum, parameter=c(3.4,2.6))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pov")
+> ### * pov
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pov
+> ### Title: Poverty Measures
+> ### Aliases: pov Watts Sen SST Foster
+> ### Keywords: univar
+> 
+> ### ** Examples
+> 
+> # generate vectors (of incomes)
+> x <- c(541, 1463, 2445, 3438, 4437, 5401, 6392, 8304, 11904, 22261)
+> y <- c(841, 2063, 2445, 3438, 4437, 5401, 6392, 8304, 11304, 21961)
+> # compute Watts index with poverty line 2000
+> pov(x, 2000)
+[1] 0.1620141
+> pov(y, 2000)
+[1] 0.08663108
+> # compute headcount ratio with poverty line 2000
+> pov(x, 2000, parameter=1, type="Foster")
+[1] 0.2
+> pov(y, 2000, parameter=1, type="Foster")
+[1] 0.1
+> 
+> 
+> cleanEx()
+> nameEx("theorLc")
+> ### * theorLc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: theorLc
+> ### Title: Theoretical Lorenz Curves
+> ### Aliases: theorLc Lc.dagum Lc.singh Lc.pareto Lc.lognorm Lc.exp
+> ### Keywords: misc
+> 
+> ### ** Examples
+> 
+> ## Load and attach income (and metadata) set from Ilocos, Philippines
+> data(Ilocos)
+> attach(Ilocos)
+> ## extract income for the province "Pangasinan"
+> income.p <- income[province=="Pangasinan"]
+> 
+> ## plot empirical Lorenz curve and add theoretical Lorenz curve of
+> ## a lognormal distribution with an estimate of the standard
+> ## deviation parameter
+> Lc.p <- Lc(income.p)
+> plot(Lc.p)
+> lines(Lc.lognorm, parameter=sd(log(income.p)), col=4)
+> 
+> 
+> 
+> # vector of percentages
+> p <- (1:10)*0.1
+> # compute values of theoretic Lorenz curve of a Dagum-distribution
+> Lc.dagum(p, parameter=c(3.4,2.6))
+ [1] 0.01309781 0.04457476 0.09148283 0.15291724 0.22887426 0.32020415
+ [7] 0.42897407 0.55962902 0.72335212 1.00000000
+> # or
+> mydagum <- theorLc(type="Dagum", parameter=c(3.4,2.6))
+> mydagum(p)
+ [1] 0.01309781 0.04457476 0.09148283 0.15291724 0.22887426 0.32020415
+ [7] 0.42897407 0.55962902 0.72335212 1.00000000
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.316 0.016 0.334 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

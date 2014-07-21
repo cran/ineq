@@ -197,7 +197,7 @@ Lc.mehran <- function(x,n)
 
 Lasym <- function(x, n = rep(1, length(x)), interval = FALSE, na.rm = TRUE)
 {
-    if(!na.rm) return(rep.int(NA_real_, 1L + as.integer(interval)))
+    if(!na.rm && any(is.na(x))) return(rep.int(NA_real_, 1L + as.integer(interval)))
     x <- as.numeric(na.omit(x))
     o <- order(x)
     x <- x[o]

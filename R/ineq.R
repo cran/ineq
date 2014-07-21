@@ -14,19 +14,18 @@ ineq <- function(x, parameter = NULL, type=c("Gini", "RS", "Atkinson", "Theil",
 
 Gini <- function(x, corr = FALSE, na.rm = TRUE)
 {
-    if(!na.rm) return(NA_real_)
+    if(!na.rm && any(is.na(x))) return(NA_real_)
     x <- as.numeric(na.omit(x))
     n <- length(x)
     x <- sort(x)
-    G <- sum(x * 1:n)
-    G <- 2*G/(n*sum(x))
-    G <- G - 1 - (1/n)
-    if(corr) G * n/(n-1) else G
+    G <- sum(x * 1L:n)
+    G <- 2 * G/sum(x) - (n + 1L)
+    if (corr) G/(n - 1L) else G/n
 }
 
 RS <- function(x, na.rm = TRUE)
 {
-    if(!na.rm) return(NA_real_)
+    if(!na.rm && any(is.na(x))) return(NA_real_)
     x <- as.numeric(na.omit(x))
     d <- abs(x - mean(x))
     d <- mean(d)/(2*mean(x))
@@ -35,7 +34,7 @@ RS <- function(x, na.rm = TRUE)
 
 Atkinson <- function(x, parameter = 0.5, na.rm = TRUE)
 {
-    if(!na.rm) return(NA_real_)
+    if(!na.rm && any(is.na(x))) return(NA_real_)
     x <- as.numeric(na.omit(x))
     if(is.null(parameter)) parameter <- 0.5
     if(parameter==1)
@@ -50,7 +49,7 @@ Atkinson <- function(x, parameter = 0.5, na.rm = TRUE)
 
 var.coeff <- function(x, square=FALSE, na.rm = TRUE)
 {
-    if(!na.rm) return(NA_real_)
+    if(!na.rm && any(is.na(x))) return(NA_real_)
     x <- as.numeric(na.omit(x))
     n <- length(x)
     V <- sqrt((n-1)*var(x)/n)/mean(x)
@@ -60,7 +59,7 @@ var.coeff <- function(x, square=FALSE, na.rm = TRUE)
 
 Theil <- function(x, parameter = 0, na.rm = TRUE)
 {
-  if(!na.rm) return(NA_real_)
+  if(!na.rm && any(is.na(x))) return(NA_real_)
   x <- as.numeric(na.omit(x))
   if(is.null(parameter)) parameter <- 0
   if(parameter==0)
@@ -80,7 +79,7 @@ Theil <- function(x, parameter = 0, na.rm = TRUE)
 
 Kolm <- function(x, parameter = 1, na.rm = TRUE)
 {
-  if(!na.rm) return(NA_real_)
+  if(!na.rm && any(is.na(x))) return(NA_real_)
   x <- as.numeric(na.omit(x))
   x <- as.numeric(x)
   if(is.null(parameter)) parameter <- 1
@@ -92,7 +91,7 @@ Kolm <- function(x, parameter = 1, na.rm = TRUE)
 
 entropy <- function(x, parameter = 0.5, na.rm = TRUE)
 {
-  if(!na.rm) return(NA_real_)
+  if(!na.rm && any(is.na(x))) return(NA_real_)
   x <- as.numeric(na.omit(x))
   x <- as.numeric(x)
   if(is.null(parameter)) parameter <- 0.5
